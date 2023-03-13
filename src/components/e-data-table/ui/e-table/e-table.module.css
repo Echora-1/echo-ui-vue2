@@ -1,0 +1,123 @@
+.eTable {
+    border-spacing: 0;
+    width: 100%;
+}
+
+
+.eTable__Th:hover .eTable__ThSortBtn {
+    opacity: 0.6;
+}
+
+.eTable__Th:hover .eTable__ThSortBtnActive {
+    opacity: 1;
+}
+
+.eTable__Th {
+    text-align: left;
+    font-size: .75rem;
+    height: 44px;
+    padding: 0 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: rgba(var(--font-color), 0.12);
+
+}
+
+.eTable__Th:first-child {
+    border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.eTable__Th:last-child {
+    border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.eTable__Tr:hover  .eTable__Td {
+    background: rgba(var(--font-color), 0.12);
+}
+
+
+.eTable__Td {
+    text-align: left;
+    font-size: .875rem;
+    height: 44px;
+    padding: 0 16px;
+    transition: background-color 0.2s;
+}
+
+.eTable__ThSortBtn {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.eTable__ThSortBtn,
+.eTable__ThSortBtnActive {
+    color: inherit;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.loadingWrap,
+.noDataWrap{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 14px);
+    right: 0;
+    top: 0;
+}
+
+.loadingWrap {
+    top: -4px;
+}
+
+.loadingText,
+.noDataText {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+@media(min-width: 768px) {
+    .eTable__Td:first-child {
+        border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    .eTable__Td:last-child {
+        border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+}
+
+@media(max-width: 767px) {
+    .eTable__Tr {
+        display: flex;
+        flex-direction: column;
+        border-bottom: thin solid rgba(var(--font-color), 0.12);
+    }
+
+    .eTable__Td {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        border: none;
+    }
+
+    .loadingWrap,
+    .noDataWrap {
+        width: 100%;
+    }
+
+    .loadingWrap {
+        top: -10px;
+    }
+
+    .noDataWrap {
+        top: -6px;
+    }
+}
+

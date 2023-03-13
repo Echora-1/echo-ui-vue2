@@ -1,0 +1,5 @@
+.EDataTable {
+    background: rgb(var(--backgraund));
+    padding: 10px;
+    border-radius: var(--radius);
+}

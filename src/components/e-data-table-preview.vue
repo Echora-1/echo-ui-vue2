@@ -1,0 +1,1009 @@
+<template>
+    <div>
+      <e-data-table
+          :head="head"
+          :rows="rows"
+          :per-page="10"
+          :loading="loading"
+      >
+        <template #currency="{row}">
+          <div class="currency-slot">
+            <img class="currency-logo" :src="getLogo(row.logo)" :alt="row.currency" width="30" height="30">
+            <span>{{ row.currency }}</span>
+          </div>
+        </template>
+        <template #safe="{row}">
+          <span>{{ row.safe }}</span>
+        </template>
+        <template #withdraw="{row}">
+          <div>
+            <span>{{ row.withdraw }}</span>
+          </div>
+        </template>
+        <template #action>
+          <button class="action-btn">
+            <span>…</span>
+          </button>
+        </template>
+      </e-data-table>
+    </div>
+</template>
+<script>
+import EDataTable from "@/components/e-data-table/ui/e-data-table.vue";
+
+export default {
+  components: {EDataTable},
+
+  data() {
+    return {
+      head: [
+        {
+          title: 'currency',
+          prop: 'currency',
+          sort: (a, b) => {
+            const nameA = a.currency.toUpperCase();
+            const nameB = b.currency.toUpperCase();
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0;
+          },
+        },
+        {
+          title: 'safe',
+          prop: 'safe',
+          sort: (a, b) => {
+                return b.safe - a.safe;
+          },
+        },
+        {
+          title: 'withdraw',
+          prop: 'withdraw',
+          sort: (a, b) => {
+            return b.withdraw - a.withdraw;
+          },
+        },
+        {
+          title: 'blocked',
+          prop: 'blocked',
+          sort: (a, b) => {
+            return b.blocked - a.blocked;
+          },
+        },
+        {
+          title: '',
+          prop: 'action',
+          sortable: false
+        }
+      ],
+      balance: {
+        "ADA": {
+          "currency": "ADA",
+          "name": "Cardano",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/ada.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 16,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "ADA",
+              "minReplenish": 5,
+              "minWithdraw": 5,
+              "feeWithdraw": 2,
+              "approve": 3,
+              "autoReplenishLimit": 500,
+              "autoVerifyReplenishLimit": 5000,
+              "autoWithdrawLimit": 200,
+              "autoVerifyWithdrawLimit": 1000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 500,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "disabled"
+        },
+        "1INCH": {
+          "currency": "1INCH",
+          "name": "1inch",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/1inch.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 19,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "1INCH",
+              "minReplenish": 2,
+              "minWithdraw": 2,
+              "feeWithdraw": 1,
+              "approve": 3,
+              "autoReplenishLimit": 1000,
+              "autoVerifyReplenishLimit": 5000,
+              "autoWithdrawLimit": 150,
+              "autoVerifyWithdrawLimit": 1500,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 300,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "disabled"
+        },
+        "AVAX": {
+          "currency": "AVAX",
+          "name": "Avalanche",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/avax.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 18,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "AVAX",
+              "minReplenish": 0.02,
+              "minWithdraw": 0.02,
+              "feeWithdraw": 0.02,
+              "approve": 3,
+              "autoReplenishLimit": 10,
+              "autoVerifyReplenishLimit": 100,
+              "autoWithdrawLimit": 3,
+              "autoVerifyWithdrawLimit": 30,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 10,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "disabled"
+        },
+        "AXS": {
+          "currency": "AXS",
+          "name": "Axie Infinity",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/axs.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 20,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "AXS",
+              "minReplenish": 0.08,
+              "minWithdraw": 0.1,
+              "feeWithdraw": 0.04,
+              "approve": 3,
+              "autoReplenishLimit": 10,
+              "autoVerifyReplenishLimit": 100,
+              "autoWithdrawLimit": 10,
+              "autoVerifyWithdrawLimit": 100,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 20,
+          "feeWithdraw": 0,
+          "scale": 2,
+          "status": "disabled"
+        },
+        "B8T": {
+          "currency": "B8T",
+          "name": "B8DEX",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/b8t.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 25,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "B8T",
+              "minReplenish": 500,
+              "minWithdraw": 200,
+              "feeWithdraw": 500,
+              "approve": 3,
+              "autoReplenishLimit": 50000,
+              "autoVerifyReplenishLimit": 500000,
+              "autoWithdrawLimit": 50000,
+              "autoVerifyWithdrawLimit": 500000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 50000,
+          "feeWithdraw": 0,
+          "scale": 6,
+          "status": "active"
+        },
+        "BCH": {
+          "currency": "BCH",
+          "name": "Bitcoin Cash",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/bch.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 3,
+              "base_currency": "BCH",
+              "platform": null,
+              "gateway_id": null,
+              "currency": "BCH",
+              "minReplenish": 0.008,
+              "minWithdraw": 0.01,
+              "feeWithdraw": 0.0003,
+              "approve": 3,
+              "autoReplenishLimit": 1,
+              "autoVerifyReplenishLimit": 5,
+              "autoWithdrawLimit": 0.01,
+              "autoVerifyWithdrawLimit": 0.1,
+              "type": "coin",
+              "explorer": "https://blockchyper/bch",
+              "replenish_type": 1,
+              "state": 6
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 1,
+          "feeWithdraw": 0,
+          "scale": 6,
+          "status": "disabled"
+        },
+        "BSW": {
+          "currency": "BSW",
+          "name": "Biswap",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/bsw.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 14,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "BSW",
+              "minReplenish": 5,
+              "minWithdraw": 5,
+              "feeWithdraw": 1.5,
+              "approve": 3,
+              "autoReplenishLimit": 500,
+              "autoVerifyReplenishLimit": 5000,
+              "autoWithdrawLimit": 200,
+              "autoVerifyWithdrawLimit": 1000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 500,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "disabled"
+        },
+        "BTC": {
+          "currency": "BTC",
+          "name": "Bitcoin",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/btc.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 1,
+              "base_currency": "BTC",
+              "platform": null,
+              "gateway_id": null,
+              "currency": "BTC",
+              "minReplenish": 0.00025,
+              "minWithdraw": 0.00025,
+              "feeWithdraw": 0.0003,
+              "approve": 3,
+              "autoReplenishLimit": 0.5,
+              "autoVerifyReplenishLimit": 5,
+              "autoWithdrawLimit": 0.001,
+              "autoVerifyWithdrawLimit": 0.01,
+              "type": "coin",
+              "explorer": "https://blockchyper/btc",
+              "replenish_type": 1,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 0.05,
+          "feeWithdraw": 0,
+          "scale": 8,
+          "status": "active"
+        },
+        "CNHT": {
+          "currency": "CNHT",
+          "name": "Tether CNH",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": null,
+          "state": 0,
+          "platforms": [],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 10000,
+          "feeWithdraw": 0,
+          "scale": 2,
+          "status": "disabled"
+        },
+        "DOGE": {
+          "currency": "DOGE",
+          "name": "Dogecoin",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/doge.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 17,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "DOGE",
+              "minReplenish": 10,
+              "minWithdraw": 20,
+              "feeWithdraw": 10,
+              "approve": 3,
+              "autoReplenishLimit": 5000,
+              "autoVerifyReplenishLimit": 50000,
+              "autoWithdrawLimit": 2000,
+              "autoVerifyWithdrawLimit": 30000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 5000,
+          "feeWithdraw": 0,
+          "scale": 2,
+          "status": "disabled"
+        },
+        "ETH": {
+          "currency": "ETH",
+          "name": "Etherium",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/eth.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 4,
+              "base_currency": "ETH",
+              "platform": null,
+              "gateway_id": null,
+              "currency": "ETH",
+              "minReplenish": 0.01,
+              "minWithdraw": 0.01,
+              "feeWithdraw": 0.01,
+              "approve": 3,
+              "autoReplenishLimit": 1,
+              "autoVerifyReplenishLimit": 10,
+              "autoWithdrawLimit": 0.1,
+              "autoVerifyWithdrawLimit": 1,
+              "type": "coin",
+              "explorer": "https://etherscan.io",
+              "replenish_type": 2,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 1,
+          "feeWithdraw": 0,
+          "scale": 6,
+          "status": "disabled"
+        },
+        "GMT": {
+          "currency": "GMT",
+          "name": "Green Metaverse",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/gmt.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 12,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "GMT",
+              "minReplenish": 10,
+              "minWithdraw": 10,
+              "feeWithdraw": 1,
+              "approve": 3,
+              "autoReplenishLimit": 1000,
+              "autoVerifyReplenishLimit": 10000,
+              "autoWithdrawLimit": 200,
+              "autoVerifyWithdrawLimit": 2000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 1000,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "disabled"
+        },
+        "GOLDT": {
+          "currency": "GOLDT",
+          "name": "GOLDEN TOKEN",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/goldt.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 24,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "GOLDT",
+              "minReplenish": 0.0001,
+              "minWithdraw": 0.0001,
+              "feeWithdraw": 0.0001,
+              "approve": 3,
+              "autoReplenishLimit": 1,
+              "autoVerifyReplenishLimit": 10,
+              "autoWithdrawLimit": 1,
+              "autoVerifyWithdrawLimit": 10,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 10,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "active"
+        },
+        "LTC": {
+          "currency": "LTC",
+          "name": "LiteCoin",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/ltc.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 2,
+              "base_currency": "LTC",
+              "platform": null,
+              "gateway_id": null,
+              "currency": "LTC",
+              "minReplenish": 0.1,
+              "minWithdraw": 0.05,
+              "feeWithdraw": 0.0003,
+              "approve": 3,
+              "autoReplenishLimit": 50,
+              "autoVerifyReplenishLimit": 500,
+              "autoWithdrawLimit": 1,
+              "autoVerifyWithdrawLimit": 10,
+              "type": "coin",
+              "explorer": "https://blockchyper/ltc",
+              "replenish_type": 1,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 3,
+          "feeWithdraw": 0,
+          "scale": 6,
+          "status": "disabled"
+        },
+        "RUI": {
+          "currency": "RUI",
+          "name": "Rubin Token",
+          "type": "crypto",
+          "safe": 50.5,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/rui.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 26,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "RUI",
+              "minReplenish": 100,
+              "minWithdraw": 100,
+              "feeWithdraw": 50,
+              "approve": 3,
+              "autoReplenishLimit": 30000,
+              "autoVerifyReplenishLimit": 100000,
+              "autoWithdrawLimit": 5000,
+              "autoVerifyWithdrawLimit": 50000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 5000,
+          "feeWithdraw": 0,
+          "scale": 2,
+          "status": "active"
+        },
+        "SHIB": {
+          "currency": "SHIB",
+          "name": "SHIBA INU",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/shib.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 13,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "SHIB",
+              "minReplenish": 100000,
+              "minWithdraw": 100000,
+              "feeWithdraw": 100000,
+              "approve": 3,
+              "autoReplenishLimit": 10000000,
+              "autoVerifyReplenishLimit": 100000000,
+              "autoWithdrawLimit": 10000000,
+              "autoVerifyWithdrawLimit": 100000000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 4
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 100000000,
+          "feeWithdraw": 0,
+          "scale": 1,
+          "status": "disabled"
+        },
+        "TBCC": {
+          "currency": "TBCC",
+          "name": "TBCC",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 58.7508,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/tbcc.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 11,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "TBCC",
+              "minReplenish": 10,
+              "minWithdraw": 50,
+              "feeWithdraw": 1,
+              "approve": 3,
+              "autoReplenishLimit": 5000,
+              "autoVerifyReplenishLimit": 50000,
+              "autoWithdrawLimit": 5000,
+              "autoVerifyWithdrawLimit": 50000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 5000,
+          "feeWithdraw": 0,
+          "scale": 2,
+          "status": "active"
+        },
+        "TCNH": {
+          "currency": "TCNH",
+          "name": "TrueCNH",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/tcnh.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 27,
+              "base_currency": "TRX",
+              "platform": "TRC20",
+              "gateway_id": null,
+              "currency": "TCNH",
+              "minReplenish": 10,
+              "minWithdraw": 10,
+              "feeWithdraw": 10,
+              "approve": 3,
+              "autoReplenishLimit": 5000,
+              "autoVerifyReplenishLimit": 50000,
+              "autoWithdrawLimit": 5000,
+              "autoVerifyWithdrawLimit": 50000,
+              "type": "token",
+              "explorer": "https://tronscan.org",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 5000,
+          "feeWithdraw": 0,
+          "scale": 2,
+          "status": "active"
+        },
+        "USDT": {
+          "currency": "USDT",
+          "name": "Tether",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0.0094131,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/usdt.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 9,
+              "base_currency": "ETH",
+              "platform": "ERC20",
+              "gateway_id": null,
+              "currency": "USDT",
+              "minReplenish": 50,
+              "minWithdraw": 50,
+              "feeWithdraw": 35,
+              "approve": 3,
+              "autoReplenishLimit": 500,
+              "autoVerifyReplenishLimit": 5000,
+              "autoWithdrawLimit": 200,
+              "autoVerifyWithdrawLimit": 10000,
+              "type": "token",
+              "explorer": "https://etherscan.org",
+              "replenish_type": 3,
+              "state": 1
+            },
+            {
+              "id": 10,
+              "base_currency": "TRX",
+              "platform": "TRC20",
+              "gateway_id": null,
+              "currency": "USDT",
+              "minReplenish": 2,
+              "minWithdraw": 5,
+              "feeWithdraw": 1,
+              "approve": 3,
+              "autoReplenishLimit": 500,
+              "autoVerifyReplenishLimit": 5000,
+              "autoWithdrawLimit": 200,
+              "autoVerifyWithdrawLimit": 10000,
+              "type": "token",
+              "explorer": "https://tronscan.org",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 100,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "active"
+        },
+        "WAVES": {
+          "currency": "WAVES",
+          "name": "Waves",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/waves.png",
+          "state": 0,
+          "platforms": [],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 40,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "disabled"
+        },
+        "XAUT": {
+          "currency": "XAUT",
+          "name": "Tether Gold",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/xaut.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 23,
+              "base_currency": "ETH",
+              "platform": "ERC20",
+              "gateway_id": null,
+              "currency": "XAUT",
+              "minReplenish": 0.02,
+              "minWithdraw": 0.02,
+              "feeWithdraw": 0.02,
+              "approve": 3,
+              "autoReplenishLimit": 10,
+              "autoVerifyReplenishLimit": 100,
+              "autoWithdrawLimit": 10,
+              "autoVerifyWithdrawLimit": 100,
+              "type": "token",
+              "explorer": "https://etherscan.io",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 100,
+          "feeWithdraw": 0,
+          "scale": 3,
+          "status": "disabled"
+        },
+        "XRP": {
+          "currency": "XRP",
+          "name": "XRP",
+          "type": "crypto",
+          "safe": 0,
+          "withdraw": 0,
+          "daily": 0,
+          "available": 0,
+          "blocked": 0,
+          "credit": 0,
+          "trade": true,
+          "logo": "storage/currencies/xrp.png",
+          "state": 0,
+          "platforms": [
+            {
+              "id": 15,
+              "base_currency": "BNB",
+              "platform": "BEP20",
+              "gateway_id": null,
+              "currency": "XRP",
+              "minReplenish": 5,
+              "minWithdraw": 5,
+              "feeWithdraw": 2,
+              "approve": 3,
+              "autoReplenishLimit": 500,
+              "autoVerifyReplenishLimit": 5000,
+              "autoWithdrawLimit": 200,
+              "autoVerifyWithdrawLimit": 1000,
+              "type": "token",
+              "explorer": "https://bscscan.com",
+              "replenish_type": 3,
+              "state": 1
+            }
+          ],
+          "minReplenish": 0,
+          "minWithdraw": 0,
+          "maxWithdraw": 500,
+          "feeWithdraw": 0,
+          "scale": 4,
+          "status": "disabled"
+        }
+      },
+      rows: [],
+      loading: false
+    }
+  },
+
+   created() {
+     this.loading = true
+
+     setTimeout(() => {
+      this.rows = Object.values(this.balance)
+      this.loading = false
+    }, 2000)
+   },
+
+  methods: {
+    getLogo(path) {
+      return `https://web.tbcc.info/${path}`
+    }
+  }
+}
+</script>
+
+<style scoped>
+.currency-slot {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.currency-logo {
+  margin-right: 10px;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+</style>

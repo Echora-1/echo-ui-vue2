@@ -1,0 +1,48 @@
+.tabWrapper {
+    display: flex;
+    padding: 0 24px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: rgb(var(--backgraund));
+    margin-bottom: 2px;
+}
+
+.tabItemWrapper {
+    background: rgb(var(--backgraund));
+    border-radius: 0 0 var(--radius) var(--radius) ;
+}
+
+.tab,
+.tabActive {
+    padding: 16px 0;
+    margin-right: 24px;
+    cursor: pointer;
+    color: rgba(var(--font-color), 0.45);
+    font-weight: 700;
+    line-height: 24px;
+    font-size: 16px;
+}
+
+.tabActive {
+    color: rgb(var(--font-color));
+    position: relative;
+}
+
+.tabActive::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgb(var(--primary));
+}
+
+.tabItem {
+    display: none;
+}
+
+.tabItemActive {
+    display: block;
+}

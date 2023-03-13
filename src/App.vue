@@ -1,28 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <EDataTablePreview class="table"/>
+    <ETabsPreview />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import EDataTablePreview from "@/components/e-data-table-preview.vue";
+import ETabsPreview from "@/components/e-tabs-preview.vue";
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    HelloWorld,
-  },
-};
+    ETabsPreview,
+    EDataTablePreview,
+  }
+}
 </script>
 
-<style lang="scss">
+
+<style scoped>
+.table {
+  margin-bottom: 20px;
+}
+</style>
+
+<style>
+:root {
+  --body: 12, 15, 29;
+  --font-color: 221, 221, 212;
+  --primary: 101, 126, 248;
+  --backgraund: 27, 29, 42;
+  --radius: 14px;
+}
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+body {
+  background: rgb(var(--body));
+  color: rgb(var(--font-color));
 }
 </style>

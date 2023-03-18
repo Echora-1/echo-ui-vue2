@@ -1,86 +1,54 @@
 <template>
   <div>
-    <e-data-table :head="head" :rows="rows" :per-page="10" :loading="loading">
-      <template #currency="{ row }">
-        <div class="currency-slot">
+    <e-select
+      :id="'selectType'"
+      :list="list"
+      name-key="name"
+      value-key="name"
+      label="Select currency"
+      placeholder="Select"
+      default-value="Cardano"
+      @selected="(value) => selectItem(value)"
+    >
+      <template #default="{ item }">
+        <div class="currency">
           <img
-            class="currency-logo"
-            :src="getLogo(row.logo)"
-            :alt="row.currency"
-            width="30"
-            height="30"
+            v-if="item.logo"
+            class="currency__logo"
+            :src="getLogo(item.logo)"
+            :alt="item.currency"
+            width="20"
+            height="20"
           />
-          <span>{{ row.currency }}</span>
+          <span class="currency__name">{{ item.name }}</span>
+          <span>{{ item.currency }}</span>
         </div>
       </template>
-      <template #safe="{ row }">
-        <span>{{ row.safe }}</span>
-      </template>
-      <template #withdraw="{ row }">
-        <div>
-          <span>{{ row.withdraw }}</span>
-        </div>
-      </template>
-      <template #action>
-        <button class="action-btn">
-          <span>…</span>
-        </button>
-      </template>
-    </e-data-table>
+    </e-select>
   </div>
 </template>
 <script>
-import EDataTable from "@/components/e-data-table/ui/e-data-table.vue";
-
+import ESelect from "@/components/e-select/e-select.vue";
 export default {
-  components: { EDataTable },
-
+  components: { ESelect },
   data() {
     return {
-      head: [
-        {
-          title: "currency",
-          prop: "currency",
-          sort: (a, b) => {
-            const nameA = a.currency.toUpperCase();
-            const nameB = b.currency.toUpperCase();
-            if (nameA < nameB) {
-              return -1;
-            }
-            if (nameA > nameB) {
-              return 1;
-            }
-            return 0;
-          },
-        },
-        {
-          title: "safe",
-          prop: "safe",
-          sort: (a, b) => {
-            return b.safe - a.safe;
-          },
-        },
-        {
-          title: "withdraw",
-          prop: "withdraw",
-          sort: (a, b) => {
-            return b.withdraw - a.withdraw;
-          },
-        },
-        {
-          title: "blocked",
-          prop: "blocked",
-          sort: (a, b) => {
-            return b.blocked - a.blocked;
-          },
-        },
-        {
-          title: "",
-          prop: "action",
-          sortable: false,
-        },
-      ],
-      balance: {
+      selectedItem: "",
+    };
+  },
+
+  methods: {
+    selectItem(value) {
+      this.selectedItem = value;
+    },
+    getLogo(path) {
+      return `https://web.tbcc.info/${path}`;
+    },
+  },
+
+  computed: {
+    list() {
+      return Object.values({
         ADA: {
           currency: "ADA",
           name: "Cardano",
@@ -962,48 +930,23 @@ export default {
           scale: 4,
           status: "disabled",
         },
-      },
-      rows: [],
-      loading: false,
-    };
-  },
-
-  created() {
-    this.loading = true;
-
-    setTimeout(() => {
-      this.rows = Object.values(this.balance);
-      this.loading = false;
-    }, 2000);
-  },
-
-  methods: {
-    getLogo(path) {
-      return `https://web.tbcc.info/${path}`;
+      });
     },
   },
 };
 </script>
 
-<style scoped>
-.currency-slot {
+<style lang="scss" scoped>
+.currency {
   display: flex;
   align-items: center;
-  padding: 4px 0;
-}
+  &__logo {
+    object-fit: contain;
+    margin-right: 10px;
+  }
 
-.currency-logo {
-  margin-right: 10px;
-}
-
-.action-btn {
-  background: transparent;
-  border: none;
-  font-weight: bold;
-  color: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+  &__name {
+    margin-right: 10px;
+  }
 }
 </style>

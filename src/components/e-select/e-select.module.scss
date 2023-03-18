@@ -1,0 +1,162 @@
+.ESelect {
+  position: relative;
+
+  &__label {
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.41px;
+    color: rgb(var(--font-color));
+    margin-bottom: 9px;
+    display: inline-block;
+  }
+
+  &__inputWrapper {
+    border: 1px solid rgba(47, 56, 94, 0.2);
+    border-radius: 6px;
+    width: 100%;
+    transition: all 0.5s;
+    background: rgb(var(--background));
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 17px;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 8px;
+      background-repeat: no-repeat;
+      background-image: url("./assets/inputVector.svg");
+      background-position: center;
+      transition: all 0.3s;
+    }
+
+    &Open {
+      &::after {
+        transform: translateY(-50%) rotate(180deg);
+      }
+    }
+  }
+
+  &__input {
+    width: 100%;
+    margin: 0;
+    border: none;
+    outline: none;
+    padding: 10px 32px 10px 15px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: transparent;
+    background-color: rgb(var(--backgraund));
+    position: relative;
+
+    &::placeholder {
+      color: rgb(var(--font-color));
+    }
+  }
+
+  &___list {
+    max-height: 200px;
+    width: -webkit-fill-available;
+    overflow-y: auto;
+    position: absolute;
+    margin-top: 11px;
+    z-index: 2;
+    background: rgb(var(--backgraund));
+    border: 1px solid rgba(47, 56, 94, 0.2);
+    border-radius: 6px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding: 15px;
+      cursor: pointer;
+      color: rgba(var(--font-color), 0.6);
+      font-size: 16px;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+
+      &:hover,
+      &:focus {
+        background-color: rgba(var(--font-color), 0.1);
+      }
+
+      .crypto-name {
+        margin-right: 7px;
+      }
+    }
+  }
+
+  &__selectedItem {
+    padding-right: 32px;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 17px;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 10px;
+      background-repeat: no-repeat;
+      background-image: url("./assets/inputCheckWhite.svg");
+      background-position: center;
+      transition: all 0.3s;
+    }
+  }
+
+  &Focused {
+    .ESelect__input {
+      color: rgba(var(--font-color));
+    }
+
+    .selectItem {
+      opacity: 0.3;
+    }
+  }
+}
+
+.invalid {
+  .invalidText {
+    color: #fa5d2c;
+    position: absolute;
+    bottom: 48px;
+    left: 0;
+    font-size: 14px;
+  }
+}
+
+.empty {
+  text-align: center;
+  font-size: 16px;
+  color: white;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.readonly {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.selectItem {
+  display: flex;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  align-items: center;
+  z-index: 1;
+}

@@ -1,11 +1,7 @@
 <script lang="jsx">
 export default {
   render() {
-    return (
-        <div>
-
-        </div>
-    )
-  }
-}
+    return <div></div>;
+  },
+};
 </script>

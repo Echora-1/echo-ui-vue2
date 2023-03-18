@@ -11,7 +11,6 @@
   background-color: transparent;
   position: relative;
   overflow: hidden;
-
 }
 
 .loader::before {
@@ -24,7 +23,6 @@
   height: 100%;
   border-radius: 0 0 14px 14px;
   animation: moving 1s ease-in-out infinite;
-;
 }
 
 @keyframes moving {
@@ -39,7 +37,7 @@
   }
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .loader {
     border-radius: var(--radius);
   }

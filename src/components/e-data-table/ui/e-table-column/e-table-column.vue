@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'e-table-column',
+  name: "e-table-column",
   props: {
     prop: {
       type: String,
@@ -8,12 +8,12 @@ export default {
     },
     title: {
       type: String,
-      default: '',
+      default: "",
     },
     sortable: {
       type: Boolean,
-      default: true
-    }
-  }
-}
+      default: true,
+    },
+  },
+};
 </script>

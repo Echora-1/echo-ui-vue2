@@ -12,6 +12,10 @@
     opacity: 1;
 }
 
+.eTable__ThSortBtn:focus {
+    opacity: 0.6;
+}
+
 .eTable__Th {
     text-align: left;
     font-size: .75rem;
@@ -53,7 +57,6 @@
 .eTable__ThSortBtnActive {
     color: inherit;
     border: none;
-    outline: none;
     background: transparent;
     cursor: pointer;
 }

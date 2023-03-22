@@ -53,6 +53,7 @@
     color: transparent;
     background-color: rgb(var(--backgraund));
     position: relative;
+    caret-color: rgb(var(--primary));
 
     &::placeholder {
       color: rgb(var(--font-color));

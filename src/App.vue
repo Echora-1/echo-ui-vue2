@@ -8,6 +8,8 @@
       <ETabsPreview class="container__item" />
       <h2>e-select</h2>
       <ESelectPreview class="container__item" />
+      <h2>e-input</h2>
+      <e-input-preview />
     </div>
   </div>
 </template>
@@ -16,9 +18,11 @@
 import EDataTablePreview from "@/components/e-data-table-preview.vue";
 import ETabsPreview from "@/components/e-tabs-preview.vue";
 import ESelectPreview from "@/components/e-select-preview.vue";
+import EInputPreview from "@/components/e-input-preview.vue";
 export default {
   name: "App",
   components: {
+    EInputPreview,
     ESelectPreview,
     ETabsPreview,
     EDataTablePreview,
@@ -44,6 +48,7 @@ export default {
   --font-color: 221, 221, 212;
   --primary: 101, 126, 248;
   --backgraund: 27, 29, 42;
+  --invalid: 234, 52, 52;
   --radius: 14px;
 }
 

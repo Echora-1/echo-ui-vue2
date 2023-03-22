@@ -25,6 +25,18 @@
         </div>
       </template>
     </e-select>
+    <e-select
+      style="margin-top: 20px"
+      :id="'selectType'"
+      :list="list"
+      name-key="name"
+      value-key="name"
+      label="Select currency"
+      placeholder="Select"
+      default-value="Cardano"
+      @selected="(value) => selectItem(value)"
+    >
+    </e-select>
   </div>
 </template>
 <script>

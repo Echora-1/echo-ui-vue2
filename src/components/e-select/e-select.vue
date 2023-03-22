@@ -153,10 +153,9 @@ export default {
       }
       return "";
     },
-
     renderItem(item) {
       const slots = this.$vnode.data.scopedSlots;
-      if (Object.hasOwn(slots, "default")) {
+      if (slots && Object.hasOwn(slots, "default")) {
         return slots.default({ item });
       }
       return <span> {item[this.nameKey]}</span>;

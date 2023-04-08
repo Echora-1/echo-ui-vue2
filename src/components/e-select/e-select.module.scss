@@ -14,7 +14,7 @@
     border: 1px solid rgba(47, 56, 94, 0.2);
     border-radius: 6px;
     width: 100%;
-    transition: all 0.5s;
+    transition: all 0.3s;
     background: rgb(var(--background));
     position: relative;
     display: flex;
@@ -54,6 +54,7 @@
     background-color: rgb(var(--backgraund));
     position: relative;
     caret-color: rgb(var(--primary));
+    border-radius: 6px;
 
     &::placeholder {
       color: rgb(var(--font-color));
@@ -69,6 +70,7 @@
     z-index: 2;
     background: rgb(var(--backgraund));
     border: 1px solid rgba(47, 56, 94, 0.2);
+    border: 1px solid rgba(var(--primary), 1);
     border-radius: 6px;
 
     ul {
@@ -117,6 +119,10 @@
   }
 
   &Focused {
+    .ESelect__inputWrapper {
+      border-color: rgb(var(--primary));
+    }
+
     .ESelect__input {
       color: rgba(var(--font-color));
     }

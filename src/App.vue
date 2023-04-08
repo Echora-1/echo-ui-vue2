@@ -1,48 +1,88 @@
 <template>
   <div id="app">
-    <div class="container">
-      <h1>echo ui</h1>
-      <h2>e-data-table</h2>
-      <EDataTablePreview class="container__item" />
-      <h2>e-tabs</h2>
-      <ETabsPreview class="container__item" />
-      <h2>e-select</h2>
-      <ESelectPreview class="container__item" />
-      <h2>e-input</h2>
-      <e-input-preview />
-    </div>
+    <MainHeader />
+    <main class="main">
+      <MainPage class="page" />
+      <aside class="aside">
+        <!--
+        <DecorIcon class="aside__decor" />
+-->
+        <div class="aside__decor">
+          <div></div>
+        </div>
+      </aside>
+    </main>
   </div>
 </template>
 
 <script>
-import EDataTablePreview from "@/components/e-data-table-preview.vue";
-import ETabsPreview from "@/components/e-tabs-preview.vue";
-import ESelectPreview from "@/components/e-select-preview.vue";
-import EInputPreview from "@/components/e-input-preview.vue";
+import MainPage from "@/page/MainPage.vue";
+import MainHeader from "@/components/widgets/MainHeader.vue";
+import DecorIcon from "@/components/icon/DecorIcon.vue";
+
 export default {
   name: "App",
-  components: {
-    EInputPreview,
-    ESelectPreview,
-    ETabsPreview,
-    EDataTablePreview,
-  },
+  components: { DecorIcon, MainHeader, MainPage },
 };
 </script>
 
-<style scoped lang="scss">
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  min-height: 1500px;
+<style lang="scss" scoped>
+.page {
+  display: block;
+  margin-top: 68px;
+  position: relative;
+  margin-bottom: 0;
+  /*
+  padding-top: 200px;
+  */
+  margin-left: 260px;
+  transition: all 0.25s ease;
+  width: calc(100% - 260px);
+  background-image: url("./bg.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-height: 100vh;
+}
 
-  &__item {
-    margin: 10px 0;
+.aside {
+  padding-right: 5px;
+  z-index: 12000;
+  transition: all 0.25s ease;
+  overflow: inherit;
+  font-size: 16px;
+  background: rgb(var(--backgraund));
+  width: 260px;
+  position: fixed;
+  margin: 0;
+  top: 57px;
+  left: 0;
+  bottom: 0;
+  border-right: 0;
+
+  &__decor {
+    background: rgb(var(--backgraund));
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 200;
+    right: -40px;
+    top: 11px;
+    pointer-events: none;
+
+    & > div {
+      background: rgb(var(--body));
+      width: 40px;
+      height: 40px;
+      border-radius: 30px 0 0 0;
+    }
   }
 }
 </style>
 
 <style>
+@import "./assets/styles/normalize.css";
+
 :root {
   --body: 12, 15, 29;
   --font-color: 221, 221, 212;
@@ -59,7 +99,7 @@ export default {
 }
 
 body {
-  background: rgb(var(--body));
+  background-color: rgb(var(--body));
   color: rgb(var(--font-color));
 }
 
@@ -85,5 +125,11 @@ body {
 * {
   scrollbar-color: rgb(var(--font-color)) transparent;
   scrollbar-width: thin;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 </style>

@@ -124,7 +124,7 @@ export default {
 .base-label {
   font-size: 16px;
   line-height: 20px;
-  letter-spacing: -0.41px;
+  letter-spacing: -0.4px;
   color: rgb(var(--font-color));
   display: inline-block;
 }

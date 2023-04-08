@@ -18,11 +18,10 @@
 <script>
 import MainPage from "@/page/MainPage.vue";
 import MainHeader from "@/components/widgets/MainHeader.vue";
-import DecorIcon from "@/components/icon/DecorIcon.vue";
 
 export default {
   name: "App",
-  components: { DecorIcon, MainHeader, MainPage },
+  components: { MainHeader, MainPage },
 };
 </script>
 

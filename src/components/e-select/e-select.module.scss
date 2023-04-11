@@ -11,7 +11,6 @@
   }
 
   &__inputWrapper {
-    border: 1px solid rgba(47, 56, 94, 0.2);
     border-radius: 6px;
     width: 100%;
     transition: all 0.3s;
@@ -19,6 +18,12 @@
     position: relative;
     display: flex;
     align-items: center;
+    height: 100%;
+    overflow: inherit;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.086);
 
     &::after {
       content: "";
@@ -51,7 +56,7 @@
     font-size: 16px;
     line-height: 20px;
     color: transparent;
-    background-color: rgb(var(--backgraund));
+    background-color: transparent;
     position: relative;
     caret-color: rgb(var(--primary));
     border-radius: 6px;
@@ -69,9 +74,12 @@
     margin-top: 11px;
     z-index: 2;
     background: rgb(var(--backgraund));
-    border: 1px solid rgba(47, 56, 94, 0.2);
-    border: 1px solid rgba(var(--primary), 1);
     border-radius: 6px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.086);
 
     ul {
       list-style: none;
@@ -82,7 +90,7 @@
     li {
       padding: 15px;
       cursor: pointer;
-      color: rgba(var(--font-color), 0.6);
+      color: rgba(var(--font-color), 0.9);
       font-size: 16px;
       line-height: 20px;
       display: flex;
@@ -90,7 +98,7 @@
 
       &:hover,
       &:focus {
-        background-color: rgba(var(--font-color), 0.1);
+        background-color: rgba(var(--primary), 0.3);
       }
 
       .crypto-name {

@@ -133,8 +133,11 @@ export default {
   top: 68px;
   z-index: 9999;
   border-radius: 0;
-  background: #33343f;
   margin: 0;
+  box-shadow: none;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  background-size: cover;
 }
 
 .header-page {

@@ -1,79 +1,70 @@
 <template>
   <div id="app">
-    <MainHeader />
-    <main class="main">
-      <MainPage class="page" />
-      <aside class="aside">
-        <!--
-        <DecorIcon class="aside__decor" />
--->
-        <div class="aside__decor">
-          <div></div>
-        </div>
-      </aside>
-    </main>
+    <test-page />
+    <div class="container">
+      <div class="dir-wrap" @click="open = !open">
+        <DirIcon class="dir" />
+        <p>Components</p>
+      </div>
+    </div>
+    <Transition duration="300" name="nested">
+      <dir-page v-if="open" @close="open = false" />
+    </Transition>
   </div>
 </template>
 
 <script>
-import MainPage from "@/page/MainPage.vue";
-import MainHeader from "@/components/widgets/MainHeader.vue";
-
+import TestPage from "@/page/TestPage.vue";
+import DirIcon from "@/components/icon/DirIcon.vue";
+import DirPage from "@/components/widgets/DirPage.vue";
 export default {
   name: "App",
-  components: { MainHeader, MainPage },
+  components: { DirPage, DirIcon, TestPage },
+
+  data() {
+    return {
+      open: false,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.page {
-  display: block;
-  margin-top: 68px;
-  position: relative;
-  margin-bottom: 0;
-  /*
-  padding-top: 200px;
-  */
-  margin-left: 260px;
-  transition: all 0.25s ease;
-  width: calc(100% - 260px);
-  background-image: url("./bg.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  max-height: 100vh;
+.dir {
+  transition: 200ms;
+  width: 64px;
+  height: 52px;
 }
 
-.aside {
-  padding-right: 5px;
-  z-index: 12000;
-  transition: all 0.25s ease;
-  overflow: inherit;
-  font-size: 16px;
-  background: rgb(var(--backgraund));
-  width: 260px;
-  position: fixed;
-  margin: 0;
-  top: 57px;
-  left: 0;
-  bottom: 0;
-  border-right: 0;
+.container {
+  padding: 32px 40px 0;
+  display: flex;
+  width: 100%;
+}
 
-  &__decor {
-    background: rgb(var(--backgraund));
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    z-index: 200;
-    right: -40px;
-    top: 11px;
-    pointer-events: none;
+.dir-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
 
-    & > div {
-      background: rgb(var(--body));
-      width: 40px;
-      height: 40px;
-      border-radius: 30px 0 0 0;
+  p {
+    letter-spacing: -0.025em;
+    font-size: 12px;
+    font-weight: 500;
+    transition: 200ms;
+    opacity: 0.75;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    svg {
+      transform: scale(1.05);
+    }
+
+    p {
+      opacity: 1;
     }
   }
 }
@@ -84,9 +75,9 @@ export default {
 
 :root {
   --body: 12, 15, 29;
+  --backgraund: 27, 29, 42;
   --font-color: 221, 221, 212;
   --primary: 101, 126, 248;
-  --backgraund: 27, 29, 42;
   --invalid: 234, 52, 52;
   --radius: 14px;
 }
@@ -95,11 +86,20 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
 }
 
 body {
   background-color: rgb(var(--body));
   color: rgb(var(--font-color));
+  /*
+  background-image: url("./blurry-gradient-haikei.svg");
+  */
+  background-image: url("./pxfuel.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
 ::-webkit-scrollbar {
@@ -130,5 +130,16 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+.nested-enter-active,
+.nested-leave-active {
+  transition: all 0.35s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.nested-enter-from,
+.nested-leave-to {
+  transform: translateY(60px) scale(0.9);
+  opacity: 0;
 }
 </style>

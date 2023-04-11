@@ -81,7 +81,6 @@ export default {
 }
 
 .base-input-wrapper {
-  border: 1px solid rgba(47, 56, 94, 0.2);
   border-radius: 6px;
   width: 100%;
   position: relative;
@@ -92,6 +91,12 @@ export default {
   align-items: center;
   transition: all 0.3s;
   margin-top: 9px;
+  height: 100%;
+  overflow: inherit;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.086);
   .suffix {
     color: rgba(var(--font-color), 0.6);
     display: inline-block;

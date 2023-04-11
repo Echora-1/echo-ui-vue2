@@ -23,7 +23,7 @@
     padding: 0 16px;
     cursor: pointer;
     text-transform: uppercase;
-    background: rgba(var(--font-color), 0.12);
+    background: rgba(var(--primary), 0.5);
 
 }
 
@@ -36,7 +36,7 @@
 }
 
 .eTable__Tr:hover  .eTable__Td {
-    background: rgba(var(--font-color), 0.12);
+    background: rgba(var(--primary), 0.3);
 }
 
 

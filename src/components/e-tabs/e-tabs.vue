@@ -4,26 +4,12 @@ export default {
   data() {
     return {
       value: 0,
-      renderedTab: [],
       options: null,
     };
   },
 
   created() {
     this.options = this.getTabsOptions();
-    this.renderedTab.push(
-      this.options.tabItem.find((t) => t.index === this.value)
-    );
-  },
-
-  watch: {
-    value() {
-      if (!this.renderedTab.find((t) => t.index === this.value)) {
-        this.renderedTab.push(
-          this.options.tabItem.find((t) => t.index === this.value)
-        );
-      }
-    },
   },
 
   methods: {
@@ -91,7 +77,7 @@ export default {
 
   render() {
     const tab = this.renderTab(this.options.tab);
-    const tabItem = this.renderTabItem(this.renderedTab);
+    const tabItem = this.renderTabItem(this.options.tabItem);
     return (
       <div>
         <div class={cls.tabWrapper}>{...tab}</div>

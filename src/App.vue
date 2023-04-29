@@ -7,6 +7,9 @@
         <p>Components</p>
       </div>
     </div>
+    <div class="container-tab">
+      <e-tabs-preview />
+    </div>
     <Transition duration="300" name="nested">
       <dir-page v-if="open" @close="open = false" />
     </Transition>
@@ -17,9 +20,10 @@
 import TestPage from "@/page/TestPage.vue";
 import DirIcon from "@/components/icon/DirIcon.vue";
 import DirPage from "@/components/widgets/DirPage.vue";
+import ETabsPreview from "@/components/e-tabs-preview.vue";
 export default {
   name: "App",
-  components: { DirPage, DirIcon, TestPage },
+  components: { ETabsPreview, DirPage, DirIcon, TestPage },
 
   data() {
     return {
@@ -40,6 +44,17 @@ export default {
   padding: 32px 40px 0;
   display: flex;
   width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.container-tab {
+  padding: 32px 40px 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .dir-wrap {
@@ -47,7 +62,7 @@ export default {
   flex-direction: column;
   align-items: center;
   margin-left: auto;
-
+  box-sizing: border-box;
   p {
     letter-spacing: -0.025em;
     font-size: 12px;
